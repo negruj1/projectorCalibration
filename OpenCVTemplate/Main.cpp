@@ -26,6 +26,11 @@
 #include <Eigen/Geometry>
 #include <fstream>
 #include <string>
+#include <shlobj.h>
+#include <direct.h>
+#include <shlobj.h>
+#include <sstream>
+#include <tchar.h>
 
 using namespace Eigen;
 using namespace std;
@@ -37,14 +42,22 @@ typedef std::vector<Eigen::Vector3d,Eigen::aligned_allocator<Eigen::Vector3d> > 
 int main ( int argc, char **argv )
 {
 
-	std::fstream myfile4("C:\\Users\\Kai\\Documents\\GitHub\\masterThesis\\results\\numberOfPoints.txt", std::ios_base::in);
+	TCHAR mypicturespath[MAX_PATH];
+    HRESULT result = SHGetFolderPath(NULL, CSIDL_MYPICTURES, NULL, SHGFP_TYPE_CURRENT, mypicturespath);        
+	ofstream file;  
+    std::basic_ostringstream<TCHAR> file_path;
+    file_path << mypicturespath << _TEXT("\\projectorCalibration\\results\\numberOfPoints.txt");
+	wcout << file_path.str().c_str() << endl;
+	std::fstream myfile4(file_path.str().c_str(), std::ios_base::in);
+	//std::fstream myfile4("C:\\Users\\Kai\\Documents\\GitHub\\masterThesis\\results\\numberOfPoints.txt", std::ios_base::in);
+	
 	float b;
 	int n = 30;
 	while(myfile4 >> b){
 		n= (int)b;
 	}
 
-	int ransacSampleSize=15;//80;
+	int ransacSampleSize=2;//80;
 	int ransacIterations=50;
   
 	Point2DVector  imagePoints;
@@ -65,7 +78,15 @@ int main ( int argc, char **argv )
     Eigen::Vector3d T;
     Eigen::Matrix3d M;
 
-	std::fstream myfile("C:\\Users\\Kai\\Documents\\GitHub\\masterThesis\\results\\first_results_1.txt", std::ios_base::in);
+	TCHAR mypicturespath2[MAX_PATH];
+    HRESULT result2 = SHGetFolderPath(NULL, CSIDL_MYPICTURES, NULL, SHGFP_TYPE_CURRENT, mypicturespath2);        
+	ofstream file2;  
+    std::basic_ostringstream<TCHAR> file_path2;
+    file_path2 << mypicturespath2 << _TEXT("\\projectorCalibration\\results\\first_results_1.txt");
+	wcout << file_path2.str().c_str() << endl;
+	std::fstream myfile(file_path2.str().c_str(), std::ios_base::in);
+	
+	//std::fstream myfile("C:\\Users\\Kai\\Documents\\GitHub\\masterThesis\\results\\first_results_1.txt", std::ios_base::in);
 
     float a;
 	int counter = 0;

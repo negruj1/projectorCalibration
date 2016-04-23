@@ -32,7 +32,7 @@ namespace Microsoft.Samples.Kinect.CoordinateMappingBasics
         private List<BitmapSource> verticalSubtractions;
         private List<BitmapSource> horizontalSubtractions;
 
-        private int THRESHOLD = 30;
+        private int THRESHOLD = 35;
         private int projectorWidth=0;
         private int projectorHeight = 0;
 
