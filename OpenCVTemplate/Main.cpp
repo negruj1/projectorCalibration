@@ -416,7 +416,13 @@ int main ( int argc, char **argv )
     std::cout << "Mt(2,2) = " << Mt.at<float> (2, 2) << std::endl;*/
 
 	ofstream myfile2;
-	myfile2.open ("C:\\Users\\Kai\\Documents\\GitHub\\masterThesis\\results\\resultsOpenCV.txt");
+	TCHAR mypicturespath3[MAX_PATH];
+    HRESULT result3 = SHGetFolderPath(NULL, CSIDL_MYPICTURES, NULL, SHGFP_TYPE_CURRENT, mypicturespath3);        
+	ofstream file3;  
+    std::basic_ostringstream<TCHAR> file_path3;
+    file_path3 << mypicturespath3 << _TEXT("\\projectorCalibration\\results\\resultsOpenCV.txt");
+	//wcout << file_path3.str().c_str() << endl;
+	myfile2.open (file_path3.str().c_str());
 	myfile2 <<"M =\n " << M <<"\n";
 	myfile2 <<"\n";
 	myfile2 <<"T =\n " << T <<"\n";
@@ -427,7 +433,13 @@ int main ( int argc, char **argv )
 	myfile2.close();
 
 	ofstream myfile3;
-	myfile3.open ("C:\\Users\\Kai\\Documents\\GitHub\\masterThesis\\results\\resultsOpenCVforProcessing.txt");
+	TCHAR mypicturespath4[MAX_PATH];
+    HRESULT result4 = SHGetFolderPath(NULL, CSIDL_MYPICTURES, NULL, SHGFP_TYPE_CURRENT, mypicturespath4);        
+	ofstream file4;  
+    std::basic_ostringstream<TCHAR> file_path4;
+    file_path4 << mypicturespath4 << _TEXT("\\projectorCalibration\\results\\resultsOpenCVforProcessing.txt");
+	//wcout << file_path4.str().c_str() << endl;
+	myfile3.open (file_path4.str().c_str());
 	myfile3 << M(0,0) <<"\n";
 	myfile3 << M(1,1) <<"\n";
 	myfile3 << M(0,2) <<"\n";
@@ -456,7 +468,7 @@ int main ( int argc, char **argv )
 
 	}
 
-	ofstream myfile5;
+	/*ofstream myfile5;
 	myfile5.open ("C:\\Users\\Kai\\Documents\\GitHub\\masterThesis\\results\\resultsOpenCVforProcessingUsingRansac.txt");
 	myfile5 << bestM(0,0) <<"\n";
 	myfile5 << bestM(1,1) <<"\n";
@@ -499,13 +511,13 @@ int main ( int argc, char **argv )
 	myfile7.close();
 
 
-
+	*/
 	cout<<"maxPointsIn: "<< maxPointsIn<<" "<<endl;
 
     std::cout << "M =\n " << bestM << std::endl;
     std::cout << "R =\n " << bestR << std::endl;
     std::cout << "T =\n " << bestT << std::endl;
-
+	/*
 
 	ofstream myfile8;
 	myfile8.open ("C:\\Users\\Kai\\Documents\\GitHub\\masterThesis\\results\\strengthOfRansac.txt");
@@ -516,7 +528,7 @@ int main ( int argc, char **argv )
 		myfile8 << "Probability of " << i << " outliers being filtered out: "<<  1.0 - pow ((1.0-q) , (ransacIterations * 1.0)) <<"\n";
 	}
 	myfile8 << "maxPointsIn " << maxPointsIn <<"\n";
-	myfile8.close();
+	myfile8.close();*/
 
 	getchar();
 

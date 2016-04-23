@@ -31,7 +31,8 @@ void setup() {
 
   kinect.init();
   
-  String[] data=loadStrings("C:/Users/Kai/Documents/GitHub/masterThesis/results/resultsOpenCVforProcessing.txt"); 
+  String[] data=loadStrings(System.getProperty("user.home").replace("\\", "/")+"/Pictures/projectorCalibration/results/resultsOpenCVforProcessing.txt");
+  //String[] data=loadStrings("C:/Users/Kai/Documents/GitHub/masterThesis/results/resultsOpenCVforProcessing.txt"); 
   
   float fx = float(data[0]);
   float fy = float(data[1]);
