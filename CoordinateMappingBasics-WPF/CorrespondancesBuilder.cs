@@ -32,6 +32,7 @@ namespace Microsoft.Samples.Kinect.CoordinateMappingBasics
         private List<BitmapSource> verticalSubtractions;
         private List<BitmapSource> horizontalSubtractions;
 
+        private int THRESHOLD = 30;
         private int projectorWidth=0;
         private int projectorHeight = 0;
 
@@ -48,7 +49,9 @@ namespace Microsoft.Samples.Kinect.CoordinateMappingBasics
 
             for (int i = 1; i < this.horizontalImages.Count; i++)
             {
-                string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\kinect" + "\\" + "horizontal";
+                string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\projectorCalibration\\kinect" + "\\" + "horizontal";
+                bool exists = System.IO.Directory.Exists(myPhotos);
+                if (!exists) System.IO.Directory.CreateDirectory(myPhotos);
                 string path = Path.Combine(myPhotos, "frame" + i + ".png");
                 BitmapSource bitmapSource = this.getBitmapFrame(path);
                 this.horizontalScreenshots.Add(bitmapSource);
@@ -56,7 +59,9 @@ namespace Microsoft.Samples.Kinect.CoordinateMappingBasics
 
             for (int i = 1; i < this.verticalImages.Count; i++)
             {
-                string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\kinect" + "\\" + "vertical";
+                string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\projectorCalibration\\kinect" + "\\" + "vertical";
+                bool exists = System.IO.Directory.Exists(myPhotos);
+                if (!exists) System.IO.Directory.CreateDirectory(myPhotos);
                 string path = Path.Combine(myPhotos, "frame" + i + ".png");
                 BitmapSource bitmapSource = this.getBitmapFrame(path);
                 this.verticalScreenshots.Add(bitmapSource);
@@ -215,7 +220,9 @@ namespace Microsoft.Samples.Kinect.CoordinateMappingBasics
         private void writeResultsToFile(List<System.Windows.Point> beamerPixels, List<Point3D> points3d)
         {
 
-            string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Github\\masterThesis\\results";
+            string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\projectorCalibration" + "\\" + "results";
+            bool exists = System.IO.Directory.Exists(myPhotos);
+            if (!exists) System.IO.Directory.CreateDirectory(myPhotos);
 
             string path = Path.Combine(myPhotos, "first_results_1.txt");
 
@@ -243,7 +250,7 @@ namespace Microsoft.Samples.Kinect.CoordinateMappingBasics
             List<System.Windows.Point> beamerPixels = new List<System.Windows.Point>();
             List<Point3D> points3d = new List<Point3D>();
 
-            List<System.Windows.Point> myRandomInputPoints = this.getInputPoints(400);//new List<System.Windows.Point>();
+            List<System.Windows.Point> myRandomInputPoints = this.getInputPoints(200);//new List<System.Windows.Point>();
 
             List<List<System.Windows.Point>> projector2dCoordinatesInCamera2d = new List<List<System.Windows.Point>>();
 
@@ -326,7 +333,10 @@ namespace Microsoft.Samples.Kinect.CoordinateMappingBasics
             this.makePhotoThatDiplaysCorrespondances(camera2dResult, errors);
             this.writeResultsToFile(beamerPixels, points3d);
             Console.WriteLine("Number of Results: {0}", counter);
-            string myPoints = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Github\\masterThesis\\results";
+            string myPoints = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\projectorCalibration" + "\\" + "results";
+            bool exists = System.IO.Directory.Exists(myPoints);
+            if (!exists) System.IO.Directory.CreateDirectory(myPoints);
+
 
             string path = Path.Combine(myPoints, "numberOfPoints.txt");
 
@@ -370,6 +380,9 @@ namespace Microsoft.Samples.Kinect.CoordinateMappingBasics
                 }
             }
 
+            string picturePath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\projectorCalibration\\results";
+            bool exists = System.IO.Directory.Exists(picturePath);
+            if (!exists) System.IO.Directory.CreateDirectory(picturePath);
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Github\\masterThesis\\results\\calibrationPointsLocation.png";
             myBitmap.Save(path);
             myBitmap.Dispose();
@@ -502,26 +515,30 @@ namespace Microsoft.Samples.Kinect.CoordinateMappingBasics
             {
                 if (i % 2 == 1)
                 {
-                    string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\kinect" + "\\" + "horizontal";
+                    string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\projectorCalibration\\kinect" + "\\" + "horizontal";
+                    bool exists = System.IO.Directory.Exists(myPhotos);
+                    if (!exists) System.IO.Directory.CreateDirectory(myPhotos);
                     string path = Path.Combine(myPhotos, "frame" + i + ".png");
                     BitmapSource bitmapSource1 = this.getBitmapFrame(path);
 
                     path = Path.Combine(myPhotos, "frame" + (i + 1) + ".png");
                     BitmapSource bitmapSource2 = this.getBitmapFrame(path);
 
-                    var result = this.subtractTwoBitmapSources(bitmapSource2, bitmapSource1, 10, -300);
+                    var result = this.subtractTwoBitmapSources(bitmapSource2, bitmapSource1, THRESHOLD, -300);
                     horizontalSubtractions.Add(result);
                     this.screenshot(i, "testHori", result);
                 }
                 else {
-                    string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\kinect" + "\\" + "horizontal";
+                    string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\projectorCalibration\\kinect" + "\\" + "horizontal";
+                    bool exists = System.IO.Directory.Exists(myPhotos);
+                    if (!exists) System.IO.Directory.CreateDirectory(myPhotos);
                     string path = Path.Combine(myPhotos, "frame" + i + ".png");
                     BitmapSource bitmapSource1 = this.getBitmapFrame(path);
 
                     path = Path.Combine(myPhotos, "frame" + (i - 1) + ".png");
                     BitmapSource bitmapSource2 = this.getBitmapFrame(path);
 
-                    var result = this.subtractTwoBitmapSources(bitmapSource2, bitmapSource1, 10, -300);
+                    var result = this.subtractTwoBitmapSources(bitmapSource2, bitmapSource1, THRESHOLD, -300);
                     horizontalSubtractions.Add(result);
                     this.screenshot(i, "testHori", result);
                 }
@@ -531,26 +548,30 @@ namespace Microsoft.Samples.Kinect.CoordinateMappingBasics
             {
                 if (i % 2 == 1)
                 {
-                    string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\kinect" + "\\" + "vertical";
+                    string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\projectorCalibration\\kinect" + "\\" + "vertical";
+                    bool exists = System.IO.Directory.Exists(myPhotos);
+                    if (!exists) System.IO.Directory.CreateDirectory(myPhotos);
                     string path = Path.Combine(myPhotos, "frame" + i + ".png");
                     BitmapSource bitmapSource1 = this.getBitmapFrame(path);
 
                     path = Path.Combine(myPhotos, "frame" + (i + 1) + ".png");
                     BitmapSource bitmapSource2 = this.getBitmapFrame(path);
 
-                    var result = this.subtractTwoBitmapSources(bitmapSource2, bitmapSource1, 10, -300);
+                    var result = this.subtractTwoBitmapSources(bitmapSource2, bitmapSource1, THRESHOLD, -300);
                     verticalSubtractions.Add(result);
                     this.screenshot(i, "testVert", result);
                 }
                 else {
-                    string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\kinect" + "\\" + "vertical";
+                    string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\projectorCalibration\\kinect" + "\\" + "vertical";
+                    bool exists = System.IO.Directory.Exists(myPhotos);
+                    if (!exists) System.IO.Directory.CreateDirectory(myPhotos);
                     string path = Path.Combine(myPhotos, "frame" + i + ".png");
                     BitmapSource bitmapSource1 = this.getBitmapFrame(path);
 
                     path = Path.Combine(myPhotos, "frame" + (i - 1) + ".png");
                     BitmapSource bitmapSource2 = this.getBitmapFrame(path);
 
-                    var result = this.subtractTwoBitmapSources(bitmapSource2, bitmapSource1, 10, -300);//55 picop
+                    var result = this.subtractTwoBitmapSources(bitmapSource2, bitmapSource1, THRESHOLD, -300);//55 picop
                     verticalSubtractions.Add(result);
                     this.screenshot(i, "testVert", result);
                 }
@@ -773,7 +794,9 @@ namespace Microsoft.Samples.Kinect.CoordinateMappingBasics
         public void calculateCorrespondances() {
             Console.WriteLine("CorrespondancesBuilder says:  Bufferlength: {0}, {1}", this.verticalImages.Count, this.horizontalImages.Count);
 
-            string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\kinect" + "\\" + "horizontal";
+            string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\projectorCalibration\\kinect" + "\\" + "horizontal";
+            bool exists = System.IO.Directory.Exists(myPhotos);
+            if (!exists) System.IO.Directory.CreateDirectory(myPhotos);
             string path = Path.Combine(myPhotos, "frame" + "0" + ".png");
             BitmapSource bitmapSource1 = this.getBitmapFrame(path);
             Console.WriteLine("bitmapSource: Width: {0}, Height: {1}", bitmapSource1.Width, bitmapSource1.Height);
@@ -813,7 +836,9 @@ namespace Microsoft.Samples.Kinect.CoordinateMappingBasics
 
             string time = System.DateTime.Now.ToString("hh'-'mm'-'ss", CultureInfo.CurrentUICulture.DateTimeFormat);
 
-            string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\kinect" + "\\" + subfolder;
+            string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\projectorCalibration\\kinect" + "\\" + subfolder;
+            bool exists = System.IO.Directory.Exists(myPhotos);
+            if (!exists) System.IO.Directory.CreateDirectory(myPhotos);
 
             string path = Path.Combine(myPhotos, "frame" + frameNumber + ".png");
 

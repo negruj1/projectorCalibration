@@ -562,7 +562,9 @@ namespace Microsoft.Samples.Kinect.CoordinateMappingBasics
 
             string time = System.DateTime.Now.ToString("hh'-'mm'-'ss", CultureInfo.CurrentUICulture.DateTimeFormat);
 
-            string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\kinect" + "\\" + subfolder;
+            string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\projectorCalibration\\kinect" + "\\" + subfolder;
+            bool exists = System.IO.Directory.Exists(myPhotos);
+            if (!exists) System.IO.Directory.CreateDirectory(myPhotos);
 
             string path = Path.Combine(myPhotos, "frame" + frameNumber + ".png");
 
@@ -585,8 +587,12 @@ namespace Microsoft.Samples.Kinect.CoordinateMappingBasics
         private void runCalibration_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("runCalibration_Click");
-            this.runningCalibration = true;
-            this.captureDepthFrame = true;
+
+            string subPath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\projectorCalibration";
+            bool exists = System.IO.Directory.Exists(subPath);
+            if (!exists) System.IO.Directory.CreateDirectory(subPath);
+            /*this.runningCalibration = true;
+            this.captureDepthFrame = true;*/
         }
 
         private void makeScreenshotOfDepthMap() {
@@ -744,7 +750,10 @@ namespace Microsoft.Samples.Kinect.CoordinateMappingBasics
 
             string time = System.DateTime.Now.ToString("hh'-'mm'-'ss", CultureInfo.CurrentUICulture.DateTimeFormat);
 
-            string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)+"\\kinect";
+
+            string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\projectorCalibration\\kinect";
+            bool exists = System.IO.Directory.Exists(myPhotos);
+            if (!exists) System.IO.Directory.CreateDirectory(myPhotos);
 
             string path = Path.Combine(myPhotos, "KinectScreenshot-CoordinateMapping-" + time + ".png");
 
@@ -772,7 +781,9 @@ namespace Microsoft.Samples.Kinect.CoordinateMappingBasics
 
             string time = System.DateTime.Now.ToString("hh'-'mm'-'ss", CultureInfo.CurrentUICulture.DateTimeFormat);
 
-            string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\kinect"+"\\"+subfolder;
+            string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\projectorCalibration\\kinect" + "\\" + subfolder;
+            bool exists = System.IO.Directory.Exists(myPhotos);
+            if (!exists) System.IO.Directory.CreateDirectory(myPhotos);
 
             string path = Path.Combine(myPhotos, "frame" + frameNumber + ".png");
 
