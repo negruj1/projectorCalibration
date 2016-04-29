@@ -32,7 +32,7 @@ namespace Microsoft.Samples.Kinect.CoordinateMappingBasics
         private List<BitmapSource> verticalSubtractions;
         private List<BitmapSource> horizontalSubtractions;
 
-        private int THRESHOLD = 35;
+        private int THRESHOLD = 30;
         private int projectorWidth=0;
         private int projectorHeight = 0;
 
@@ -383,7 +383,7 @@ namespace Microsoft.Samples.Kinect.CoordinateMappingBasics
             string picturePath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\projectorCalibration\\results";
             bool exists = System.IO.Directory.Exists(picturePath);
             if (!exists) System.IO.Directory.CreateDirectory(picturePath);
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Github\\masterThesis\\results\\calibrationPointsLocation.png";
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\projectorCalibration\\resultscalibrationPointsLocation.png";
             myBitmap.Save(path);
             myBitmap.Dispose();
         }

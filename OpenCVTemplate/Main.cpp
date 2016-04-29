@@ -50,6 +50,7 @@ int main ( int argc, char **argv )
 	wcout << file_path.str().c_str() << endl;
 	std::fstream myfile4(file_path.str().c_str(), std::ios_base::in);
 	//std::fstream myfile4("C:\\Users\\Kai\\Documents\\GitHub\\masterThesis\\results\\numberOfPoints.txt", std::ios_base::in);
+	//std::fstream myfile4("C:\\Users\\Kai\\Pictures\\projectorCalibration\\results\\numberOfPoints.txt", std::ios_base::in);
 	
 	float b;
 	int n = 30;
@@ -57,7 +58,7 @@ int main ( int argc, char **argv )
 		n= (int)b;
 	}
 
-	int ransacSampleSize=2;//80;
+	int ransacSampleSize=15;//80;
 	int ransacIterations=50;
   
 	Point2DVector  imagePoints;
@@ -86,7 +87,7 @@ int main ( int argc, char **argv )
 	wcout << file_path2.str().c_str() << endl;
 	std::fstream myfile(file_path2.str().c_str(), std::ios_base::in);
 	
-	//std::fstream myfile("C:\\Users\\Kai\\Documents\\GitHub\\masterThesis\\results\\first_results_1.txt", std::ios_base::in);
+	//std::fstream myfile("C:\\Users\\Kai\\Pictures\\projectorCalibration\\results\\first_results_1.txt", std::ios_base::in);
 
     float a;
 	int counter = 0;
@@ -421,8 +422,10 @@ int main ( int argc, char **argv )
 	ofstream file3;  
     std::basic_ostringstream<TCHAR> file_path3;
     file_path3 << mypicturespath3 << _TEXT("\\projectorCalibration\\results\\resultsOpenCV.txt");
+	//"C:\\Users\\Kai\\Pictures\projectorCalibration\\results\\first_results_1.txt"
 	//wcout << file_path3.str().c_str() << endl;
 	myfile2.open (file_path3.str().c_str());
+	//myfile2.open ("C:\\Users\\Kai\\Pictures\projectorCalibration\\results\\resultsOpenCV.txt");
 	myfile2 <<"M =\n " << M <<"\n";
 	myfile2 <<"\n";
 	myfile2 <<"T =\n " << T <<"\n";
@@ -440,6 +443,7 @@ int main ( int argc, char **argv )
     file_path4 << mypicturespath4 << _TEXT("\\projectorCalibration\\results\\resultsOpenCVforProcessing.txt");
 	//wcout << file_path4.str().c_str() << endl;
 	myfile3.open (file_path4.str().c_str());
+	//myfile3.open ("C:\\Users\\Kai\\Pictures\projectorCalibration\\results\\resultsOpenCVforProcessing.txt");
 	myfile3 << M(0,0) <<"\n";
 	myfile3 << M(1,1) <<"\n";
 	myfile3 << M(0,2) <<"\n";
